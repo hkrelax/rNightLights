@@ -1,4 +1,6 @@
-# nightlights
+# rNightLights
+This package was forked from walshc/nightlights project. I managered to add more functions like `untarNightLights` to uncompressing the manully downloaded NOAA data and `calibNightLights` to inter-calibiration the data across different satellites and years.
+
 An `R` package to extract NOAA night lights data for regions within shapefiles
 (a `SpatialPolygons` or `SpatialPolygonsDataFrame`). The night lights data can be downloaded from
 [here](http://ngdc.noaa.gov/eog/data/web_data/v4composites/) or using the
@@ -11,13 +13,13 @@ script is provided to download and extract all the data (see below).
 
 ```r
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("walshc/nightlights")
+devtools::install_github("jpshuimu/rNightLights")
 ```
 
 ## Usage
 
 ```r
-require(nightlights)
+require(rNightLights)
 
 # Download, extract and load and example shapefile to work with (US counties):
 download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/COUSUB/tl_2015_25_cousub.zip",
@@ -27,6 +29,9 @@ shp <- rgdal::readOGR(".", "tl_2015_25_cousub")
 
 # Download and extract some night lights data to a directory "night-lights":
 downloadNightLights(years = 1999:2000, directory = "night-lights")
+
+# Uncompress the downloaded night lights data to a directory "night-lights":
+untarNightLights(years = 1999:2000, directory = "night-lights")
 
 # By default, the function gets the sum of night lights within the regions:
 nl.sums <- extractNightLights(directory = "night-lights", shp)
@@ -46,10 +51,3 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
         3 2502372985    Wareham                5625.5                5338.0
         4 2500300975     Alford                 324.5                 409.0
         5 2500334970      Lenox                2339.5                2661.0
-
-## Script to download and extract all the data
-Instead of downloading all the data using the `downloadNightLights()` function, I also provide a script (`download-and-extract-lights-data.sh`) which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wish. Paste the following command into the terminal to get it started:
-
-```bash
-curl https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh | bash
-```
