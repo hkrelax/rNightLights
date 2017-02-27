@@ -53,4 +53,4 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
         5 2500334970      Lenox                2339.5                2661.0
         
 ## Roadmap
-* add inter-calibration function following ***Elvidge et al (2009). Li et al (2013)*** to make an comparable panel data.
+* add inter-calibration function following ***Elvidge et al (2009). Li et al (2013)*** to make a comparable panel data.
