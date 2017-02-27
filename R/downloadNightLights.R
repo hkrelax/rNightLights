@@ -1,4 +1,4 @@
-downloadNightLights <- function(years, extract = TRUE, directory = NULL,
+downloadNightLights <- function(years, extract = TRUE, delete = TRUE, directory = NULL,
                                 download.method = "auto", ...) {
 
   root.url <- "https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/"
@@ -26,7 +26,10 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL,
                   method = download.method, ...)
     if (extract) {
       untar(i)
+      # add option of deleting the origin file or not
+      if (delete) {
       file.remove(i)
+      }
       all.files <- list.files()
       gz <- all.files[grepl(gsub(".tar", "", i), all.files) &
                       grepl("web.stable_lights.avg_vis.tif.gz", all.files)]
