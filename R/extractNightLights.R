@@ -1,4 +1,4 @@
-extractAllNightLights <- function(directory = ".", shp, stats = "sum", years = NULL) {
+extractNightLights <- function(directory = ".", shp, stats = "sum", years = NULL) {
   require(raster)
   if (!class(shp) %in% c("SpatialPolygons", "SpatialPolygonsDataFrame", 
                          "SpatialPointsDataFrame")) {
