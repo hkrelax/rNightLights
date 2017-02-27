@@ -51,3 +51,6 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
         3 2502372985    Wareham                5625.5                5338.0
         4 2500300975     Alford                 324.5                 409.0
         5 2500334970      Lenox                2339.5                2661.0
+        
+## Roadmap
+* add inter-calibration function following ***Elvidge et al (2009). Li et al (2013)*** to make an comparable panel data.
