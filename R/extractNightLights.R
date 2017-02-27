@@ -34,12 +34,12 @@ extractNightLights <- function(directory = ".", shp, stats = "sum", years = NULL
       satellite2 <- substr(both.files[2], 1, 3)
       
       for (j in stats) {
-        cat("Extracting night lights data for satellite ", satellite1, "year ", years[i], "...", sep = "")
+        cat("Extracting night lights data for satellite ", satellite1, " year ", years[i], "...", sep = "")
         extract <- raster::extract(r1, shp, fun = get(j), 
                                    na.rm = TRUE)
         df[[paste0("night.lights.", satellite1,".", years[i], ".", j)]] <- c(extract)
         
-        cat("Extracting night lights data for satellite ", satellite2, "year ", years[i], "...", sep = "")
+        cat("Extracting night lights data for satellite ", satellite2, " year ", years[i], "...", sep = "")
         extract <- raster::extract(r2, shp, fun = get(j), 
                                    na.rm = TRUE)
         df[[paste0("night.lights.", satellite2,".", years[i], ".", j)]] <- c(extract)
@@ -51,7 +51,7 @@ extractNightLights <- function(directory = ".", shp, stats = "sum", years = NULL
       satellite <- substr(grep(years[i], files, value = TRUE), 1, 3)
       
       for (j in stats) {
-        cat("Extracting night lights data for satellite ", satellite, "year ", years[i], "...", sep = "")
+        cat("Extracting night lights data for satellite ", satellite, " year ", years[i], "...", sep = "")
         extract <- raster::extract(r, shp, fun = get(j), 
                                    na.rm = TRUE)
         df[[paste0("night.lights.", satellite,".", years[i], ".", j)]] <- c(extract)
