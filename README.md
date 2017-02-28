@@ -53,4 +53,5 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
         5 2500334970      Lenox                2339.5                2661.0
         
 ## Roadmap
+* modify the `extractNightLights()` function. In order to do the calibration, we need to extract all the cells of certain area before calcuating certain statistical results. 
 * add inter-calibration function following ***Elvidge et al (2009). Li et al (2013)*** to make a comparable panel data.
