@@ -1,4 +1,4 @@
-extractNightLights <- function(directory = ".", shp, stats = "sum", years = NULL) {
+extractNightLights <- function(directory = ".", shp, stats = NULL, years = NULL) {
   require(raster)
   if (!class(shp) %in% c("SpatialPolygons", "SpatialPolygonsDataFrame", 
                          "SpatialPointsDataFrame")) {
@@ -27,35 +27,33 @@ extractNightLights <- function(directory = ".", shp, stats = "sum", years = NULL
   for (i in seq_along(years)) {
     if (years[i] %in% double.years) {
       both.files <- grep(years[i], files, value = TRUE)
+      
       r1 <- crop(raster(both.files[1]), shp, snap = "out")
       satellite1 <- substr(both.files[1], 1, 3)
+      
+      cat("Extracting night lights data for satellite ", satellite1, " year ", years[i], "...\n", sep = "")
+      # In oreder to do the calibration, instead of calculate centain statistical function,
+      # we first extract all the cell value, including the zero ones.
+      extract <- raster::extract(r1, shp, method = "simple")
+      # All the cells' value within certain region were return as a list.
+      df[[paste0("night.lights.", satellite1,".", years[i], ".", j)]] <- c(extract)
       
       r2 <- crop(raster(both.files[2]), shp, snap = "out")
       satellite2 <- substr(both.files[2], 1, 3)
       
-      for (j in stats) {
-        cat("Extracting night lights data for satellite ", satellite1, " year ", years[i], "...\n", sep = "")
-        extract <- raster::extract(r1, shp, fun = get(j), 
-                                   na.rm = TRUE)
-        df[[paste0("night.lights.", satellite1,".", years[i], ".", j)]] <- c(extract)
-        
-        cat("Extracting night lights data for satellite ", satellite2, " year ", years[i], "...\n", sep = "")
-        extract <- raster::extract(r2, shp, fun = get(j), 
-                                   na.rm = TRUE)
-        df[[paste0("night.lights.", satellite2,".", years[i], ".", j)]] <- c(extract)
-      }
+      cat("Extracting night lights data for satellite ", satellite2, " year ", years[i], "...\n", sep = "")
+      extract <- raster::extract(r2, shp, method = "simple")
+      df[[paste0("night.lights.", satellite2,".", years[i], ".", j)]] <- c(extract)
+      
     }
     else {
       r <- crop(raster(grep(years[i], files, value = TRUE)), 
                 shp, snap = "out")
       satellite <- substr(grep(years[i], files, value = TRUE), 1, 3)
       
-      for (j in stats) {
-        cat("Extracting night lights data for satellite ", satellite, " year ", years[i], "...\n", sep = "")
-        extract <- raster::extract(r, shp, fun = get(j), 
-                                   na.rm = TRUE)
-        df[[paste0("night.lights.", satellite,".", years[i], ".", j)]] <- c(extract)
-      }
+      cat("Extracting night lights data for satellite ", satellite, " year ", years[i], "...\n", sep = "")
+      extract <- raster::extract(r, shp, method = "simple")
+      df[[paste0("night.lights.", satellite,".", years[i], ".", j)]] <- c(extract)
     }
     cat("Done\n")
   }
